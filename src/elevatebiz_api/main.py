@@ -3,6 +3,8 @@ from pydantic import BaseModel, EmailStr, Field
 import os
 from dotenv import load_dotenv
 from pymongo import AsyncMongoClient
+from datetime import datetime, UTC
+
 
 load_dotenv()
 client = AsyncMongoClient(os.environ["MONGODB_URI"])
@@ -23,5 +25,7 @@ def health():
 
 @app.post("/api/leads", status_code=201)
 async def create_lead(lead: LeadIn):
-    result = await leads.insert_one(lead.model_dump())
+    doc = lead.model_dump()
+    doc["created_at"] = datetime.now(UTC)
+    result = await leads.insert_one(doc)
     return {"id": str(result.inserted_id)}
