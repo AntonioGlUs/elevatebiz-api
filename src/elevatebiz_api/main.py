@@ -30,7 +30,7 @@ app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "https://elevatebiz.ai"],
+    allow_origins=["http://localhost:3000", "https://elevatebiz.ai","https://www.elevatebiz.ai",],
     allow_methods=["GET", "POST"],
     allow_headers=["Content-Type"],
 )
